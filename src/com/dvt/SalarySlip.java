@@ -25,6 +25,7 @@ public class SalarySlip implements SalarySlipInterface {
     private final static double ANNUAL_INSURANCE_STARTING_LIMIT_LEVEL_2 = 43000.00;
     private double annualInsuranceContribution = 0.00;
     private double monthlyInsuranceContribution = 0.00;
+    private double insuranceContributionRate = 0.00;
 
     public SalarySlip() {
     }
@@ -34,6 +35,7 @@ public class SalarySlip implements SalarySlipInterface {
 
         calculateTaxAmountDue();
         calculateInsuranceAmountDue();
+        calculateInsuranceContributionRate();
         convertSalaryToMonthly();
     }
 
@@ -98,6 +100,13 @@ public class SalarySlip implements SalarySlipInterface {
         monthlyTaxFreeAllowance = annualTaxFreeAllowance / 12.00;
     }
 
+    public void calculateInsuranceContributionRate() {
+        if (annualGrossSalary > 43000.00)
+            insuranceContributionRate = 0.02;
+        else if (this.annualGrossSalary > 8060.00)
+            insuranceContributionRate = 0.12;
+    }
+
     public void calculateInsuranceAmountDue() {
         if (employee.getAnnualGrossSalary() > ANNUAL_INSURANCE_STARTING_LIMIT_LEVEL_2) {
             calculateLevel2InsuranceContribution();
@@ -145,6 +154,10 @@ public class SalarySlip implements SalarySlipInterface {
 
     public double getMonthlyInsuranceContribution() {
         return format(monthlyInsuranceContribution);
+    }
+
+    public double getInsuranceContributionRate() {
+        return insuranceContributionRate;
     }
 
     public Employee getEmployee() {

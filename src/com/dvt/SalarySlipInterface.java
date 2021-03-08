@@ -9,6 +9,7 @@ public interface SalarySlipInterface {
     double getMonthlyTaxFreeAllowance();
     double getAnnualInsuranceContribution();
     double getMonthlyInsuranceContribution();
+    double getInsuranceContributionRate();
     Employee getEmployee();
     double getMonthlyGrossSalary();
 }
