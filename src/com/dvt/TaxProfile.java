@@ -59,9 +59,6 @@ public class TaxProfile implements TaxProfileInterface {
         monthlyTaxFreeAllowance = annualTaxFreeAllowance / 12.0;
     }
 
-    public TaxProfile() {
-    }
-
     public void calculateTaxAmountDue(double annualGrossSalary) {
         this.annualGrossSalary = annualGrossSalary;
 

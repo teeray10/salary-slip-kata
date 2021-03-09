@@ -26,21 +26,15 @@ public class TaxProfileTest {
     @Before
     public void setup() throws Exception {
         taxProfile = new TaxProfile();
-        employee = new Employee("111", "Taylor", 12000.00, taxProfile);
+        employee = new Employee("111", "Taylor", 12000.00, taxProfile, new InsuranceProfile());
         salarySlip = new SalarySlipGenerator().generateSalarySlip(employee);
 
     }
 
     @Test
-    public void taxCreated() throws Exception {
-        TaxProfile tax = new TaxProfile();
-        assertNotNull(tax);
-    }
-
-    @Test
-    public void taxInterfaceCreated() throws Exception {
-        TaxProfileInterface taxProfileInterface = new TaxProfile();
-        assertNotNull(taxProfileInterface);
+    public void taxProfileCreated() throws Exception {
+        TaxProfileInterface taxProfile = new TaxProfile();
+        assertNotNull(taxProfile);
     }
 
     @Test
@@ -55,7 +49,7 @@ public class TaxProfileTest {
 
     @Test
     public void calculateTaxPayableWhenNotApplicable() throws Exception {
-        employee = new Employee("12345", "John J Doe", 11000.00, new TaxProfile());
+        employee = new Employee("12345", "John J Doe", 11000.00, new TaxProfile(), new InsuranceProfile());
         salarySlip = new SalarySlipGenerator().generateSalarySlip(employee);
         assertTaxPayable(0.0);
     }
