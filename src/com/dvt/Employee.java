@@ -3,19 +3,19 @@ package com.dvt;
 public class Employee {
     private String id = "";
     private String name = "";
-    private double annualGrossSalary = 0.00;
-    private TaxInterface taxProfile = null;
+    private double annualGrossSalary = 0.0;
+    private TaxProfileInterface taxProfile = null;
 
     public Employee() {
     }
 
-    public Employee(String id, String name, double annualGrossSalary, TaxInterface taxProfile) {
+    public Employee(String id, String name, double annualGrossSalary, TaxProfileInterface taxProfile) {
         this.id = id;
         this.name = name;
         this.annualGrossSalary = annualGrossSalary;
         this.taxProfile = taxProfile;
 
-        taxProfile.calculateTaxAmountDue(this.annualGrossSalary);
+        this.taxProfile.calculateTaxAmountDue(this.annualGrossSalary);
     }
 
     public String getId() {
@@ -30,7 +30,7 @@ public class Employee {
         return annualGrossSalary;
     }
 
-    public TaxInterface getTaxProfile() {
+    public TaxProfileInterface getTaxProfile() {
         return taxProfile;
     }
 }

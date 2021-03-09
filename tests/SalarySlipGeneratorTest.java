@@ -8,7 +8,7 @@ import static org.junit.Assert.assertNotNull;
 public class SalarySlipGeneratorTest {
     private SalarySlipInterface salarySlip = null;
     private Employee employee = null;
-    private TaxInterface taxProfile = null;
+    private TaxProfileInterface taxProfile = null;
 
     //UTILITIES
     private void assertName(String expected) {
@@ -45,7 +45,7 @@ public class SalarySlipGeneratorTest {
 
     @Before
     public void setup() {
-        taxProfile = new Tax();
+        taxProfile = new TaxProfile();
         employee = new Employee("0001", "Taylor Ray", 10000.00, taxProfile);
         salarySlip = new SalarySlipGenerator().generateSalarySlip(employee);
     }
@@ -131,14 +131,6 @@ public class SalarySlipGeneratorTest {
         assertName("John J Doe");
         assertGrossSalary(755.0);
         assertInsuranceContribution(10.00);
-    }
-
-    @Test
-    public void checkTaxAmountDueWhenNotApplicable() throws Exception {
-        employee = new Employee("12345", "John J Doe", 11000.00, taxProfile);
-        salarySlip = new SalarySlipGenerator().generateSalarySlip(employee);
-
-        assertTaxPayable(0.0);
     }
 
     @Test //Iteration 3

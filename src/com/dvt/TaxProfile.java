@@ -1,6 +1,6 @@
 package com.dvt;
 
-public class Tax implements TaxInterface {
+public class TaxProfile implements TaxProfileInterface {
     private final static double ANNUAL_TAX_LIMIT_LEVEL_1 = 11000.0;
     private final static double ANNUAL_TAX_LIMIT_LEVEL_2 = 43000.0;
     private final static double ANNUAL_TAX_LIMIT_LEVEL_3 = 100000.0;
@@ -16,28 +16,6 @@ public class Tax implements TaxInterface {
     private double annualTaxFreeAllowance = ANNUAL_TAX_LIMIT_LEVEL_1;
 
     private double annualGrossSalary = 0.0;
-
-    public Tax() {
-    }
-
-    public void calculateTaxAmountDue(double annualGrossSalary) {
-        this.annualGrossSalary = annualGrossSalary;
-        double tempSalary = annualGrossSalary;
-
-        if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_4) {
-            calculateLevel4Tax();
-        }
-        if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_2) {
-            calculateLevel2Tax();
-            if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_3) {
-                calculateLevel3Tax(tempSalary);
-            }
-        } else if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_1)
-            calculateLevel1Tax();
-        if (annualTaxableIncome > 0.0) {
-            convertAnnualTaxToMonthly(annualTaxableIncome, annualTaxPayable, annualTaxFreeAllowance);
-        }
-    }
 
     private void calculateLevel1Tax() {
         annualTaxableIncome = annualGrossSalary - ANNUAL_TAX_LIMIT_LEVEL_1;
@@ -76,13 +54,34 @@ public class Tax implements TaxInterface {
     }
 
     private void convertAnnualTaxToMonthly(double annualTaxableIncome, double annualTaxPayable, double annualTaxFreeAllowance) {
-        this.monthlyTaxableIncome = annualTaxableIncome / 12.0;
-        this.monthlyTaxPayable = annualTaxPayable / 12.0;
+        monthlyTaxableIncome = annualTaxableIncome / 12.0;
+        monthlyTaxPayable = annualTaxPayable / 12.0;
         monthlyTaxFreeAllowance = annualTaxFreeAllowance / 12.0;
     }
 
+    public TaxProfile() {
+    }
+
+    public void calculateTaxAmountDue(double annualGrossSalary) {
+        this.annualGrossSalary = annualGrossSalary;
+
+        if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_4) {
+            calculateLevel4Tax();
+        }
+        if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_2) {
+            calculateLevel2Tax();
+            if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_3) {
+                calculateLevel3Tax(annualGrossSalary);
+            }
+        } else if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_1)
+            calculateLevel1Tax();
+        if (annualTaxableIncome > 0.0) {
+            convertAnnualTaxToMonthly(annualTaxableIncome, annualTaxPayable, annualTaxFreeAllowance);
+        }
+    }
+
     public double getMonthlyTaxPayable() {
-        return format(this.monthlyTaxPayable);
+        return format(monthlyTaxPayable);
     }
 
     public double getMonthlyTaxableIncome() {
