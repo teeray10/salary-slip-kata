@@ -4,24 +4,18 @@ public class Employee {
     private String id = "";
     private String name = "";
     private double annualGrossSalary = 0.00;
-    private double insuranceContribution = 0.00;
+    private TaxInterface taxProfile = null;
 
     public Employee() {
     }
 
-    public Employee(String id, String name, double annualGrossSalary) {
+    public Employee(String id, String name, double annualGrossSalary, TaxInterface taxProfile) {
         this.id = id;
         this.name = name;
         this.annualGrossSalary = annualGrossSalary;
+        this.taxProfile = taxProfile;
 
-        calculateInsuranceContribution();
-    }
-
-    public void calculateInsuranceContribution() {
-        if (annualGrossSalary >= 43000.00)
-            insuranceContribution = 0.02;
-        else if (this.annualGrossSalary >= 8060.00)
-            this.insuranceContribution = 0.12;
+        taxProfile.calculateTaxAmountDue(this.annualGrossSalary);
     }
 
     public String getId() {
@@ -36,7 +30,7 @@ public class Employee {
         return annualGrossSalary;
     }
 
-    public double getInsuranceContribution() {
-        return insuranceContribution;
+    public TaxInterface getTaxProfile() {
+        return taxProfile;
     }
 }
