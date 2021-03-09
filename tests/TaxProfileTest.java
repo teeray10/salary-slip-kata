@@ -5,10 +5,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class TaxTest {
+public class TaxProfileTest {
     private SalarySlipInterface salarySlip = null;
     private Employee employee = null;
-    private TaxInterface tax = null;
+    private TaxProfileInterface taxProfile = null;
 
     // UTILITIES
     private void assertTaxPayable(double expected) {
@@ -25,31 +25,37 @@ public class TaxTest {
 
     @Before
     public void setup() throws Exception {
-        tax = new Tax();
-        employee = new Employee("111", "Taylor", 50000.00, tax);
+        taxProfile = new TaxProfile();
+        employee = new Employee("111", "Taylor", 12000.00, taxProfile, new InsuranceProfile());
         salarySlip = new SalarySlipGenerator().generateSalarySlip(employee);
 
     }
 
     @Test
-    public void nothing() throws Exception {
+    public void taxProfileCreated() throws Exception {
+        TaxProfileInterface taxProfile = new TaxProfile();
+        assertNotNull(taxProfile);
     }
 
     @Test
-    public void taxCreated() throws Exception {
-        Tax tax = new Tax();
-        assertNotNull(tax);
+    public void calculateTaxFreeAllowance() throws Exception {
+        assertTaxFreeAllowance(916.67);
     }
 
     @Test
-    public void taxInterfaceCreated() throws Exception {
-        TaxInterface taxInterface = new Tax();
-        assertNotNull(taxInterface);
+    public void calculateTaxableIncome() throws Exception {
+        assertTaxableIncome(83.33);
     }
 
     @Test
-    public void taxAmountDue() throws Exception {
-        employee = new Employee("111", "taylor", 12000.00, tax);
+    public void calculateTaxPayableWhenNotApplicable() throws Exception {
+        employee = new Employee("12345", "John J Doe", 11000.00, new TaxProfile(), new InsuranceProfile());
+        salarySlip = new SalarySlipGenerator().generateSalarySlip(employee);
+        assertTaxPayable(0.0);
+    }
+
+    @Test
+    public void calculateTaxPayableWhenApplicable() throws Exception {
         assertTaxPayable(16.67);
     }
 

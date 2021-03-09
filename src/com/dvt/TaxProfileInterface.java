@@ -1,6 +1,6 @@
 package com.dvt;
 
-public interface TaxInterface {
+public interface TaxProfileInterface {
     double getMonthlyTaxPayable();
     double getMonthlyTaxableIncome();
     double getMonthlyTaxFreeAllowance();
