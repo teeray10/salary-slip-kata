@@ -6,7 +6,6 @@ import static org.junit.Assert.assertEquals;
 public class IntegrationTests {
     private SalarySlipInterface salarySlip = null;
     private Employee employee = null;
-    private TaxProfileInterface taxProfile = null;
 
     //UTILITIES
     private void assertName(String expected) {
@@ -60,6 +59,7 @@ public class IntegrationTests {
         assertName("John J Doe");
         assertGrossSalary(755.0);
         assertInsuranceContribution(10.00);
+        assertInsuranceRate(0.12);
     }
 
     @Test //Iteration 3

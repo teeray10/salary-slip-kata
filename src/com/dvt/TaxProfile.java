@@ -17,6 +17,42 @@ public class TaxProfile implements TaxProfileInterface {
 
     private double annualGrossSalary = 0.0;
 
+    public void calculateTaxAmountDue(double annualGrossSalary) {
+        this.annualGrossSalary = annualGrossSalary;
+
+        if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_4) {
+            calculateLevel4Tax();
+        }
+        if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_2) {
+            calculateLevel2Tax();
+            if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_3) {
+                calculateLevel3Tax(annualGrossSalary);
+            }
+        } else if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_1)
+            calculateLevel1Tax();
+        if (annualTaxableIncome > 0.0) {
+            convertAnnualTaxToMonthly(annualTaxableIncome, annualTaxPayable, annualTaxFreeAllowance);
+        }
+    }
+
+    public double getMonthlyTaxPayable() {
+        return format(monthlyTaxPayable);
+    }
+
+    public double getMonthlyTaxableIncome() {
+        return format(monthlyTaxableIncome);
+    }
+
+    public double getMonthlyTaxFreeAllowance() {
+        if (monthlyTaxFreeAllowance <= 0.0)
+            return 0.0;
+        return format(monthlyTaxFreeAllowance);
+    }
+
+    public double format(double preFormat) {
+        return FormatDecimals.calculate(preFormat);
+    }
+
     private void calculateLevel1Tax() {
         annualTaxableIncome = annualGrossSalary - ANNUAL_TAX_LIMIT_LEVEL_1;
         annualTaxPayable = annualTaxableIncome * TAX_RATE_LEVEL_1;
@@ -57,41 +93,5 @@ public class TaxProfile implements TaxProfileInterface {
         monthlyTaxableIncome = annualTaxableIncome / 12.0;
         monthlyTaxPayable = annualTaxPayable / 12.0;
         monthlyTaxFreeAllowance = annualTaxFreeAllowance / 12.0;
-    }
-
-    public void calculateTaxAmountDue(double annualGrossSalary) {
-        this.annualGrossSalary = annualGrossSalary;
-
-        if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_4) {
-            calculateLevel4Tax();
-        }
-        if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_2) {
-            calculateLevel2Tax();
-            if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_3) {
-                calculateLevel3Tax(annualGrossSalary);
-            }
-        } else if (annualGrossSalary > ANNUAL_TAX_LIMIT_LEVEL_1)
-            calculateLevel1Tax();
-        if (annualTaxableIncome > 0.0) {
-            convertAnnualTaxToMonthly(annualTaxableIncome, annualTaxPayable, annualTaxFreeAllowance);
-        }
-    }
-
-    public double getMonthlyTaxPayable() {
-        return format(monthlyTaxPayable);
-    }
-
-    public double getMonthlyTaxableIncome() {
-        return format(monthlyTaxableIncome);
-    }
-
-    public double getMonthlyTaxFreeAllowance() {
-        if (monthlyTaxFreeAllowance <= 0.0)
-            return 0.0;
-        return format(monthlyTaxFreeAllowance);
-    }
-
-    public double format(double preFormat) {
-        return FormatDecimals.calculate(preFormat);
     }
 }

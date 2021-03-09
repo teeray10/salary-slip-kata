@@ -26,7 +26,7 @@ public class SalarySlipGeneratorTest {
     @Before
     public void setup() {
         taxProfile = new TaxProfile();
-        employee = new Employee("0001", "Taylor Ray", 10000.00, taxProfile, new InsuranceProfile());
+        employee = new Employee("0001", "Taylor Ray", 10000.00, new TaxProfile(), new InsuranceProfile());
         salarySlip = new SalarySlipGenerator().generateSalarySlip(employee);
     }
 

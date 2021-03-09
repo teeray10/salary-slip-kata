@@ -4,16 +4,7 @@ import static java.lang.Double.valueOf;
 
 public class SalarySlip implements SalarySlipInterface {
     private Employee employee = null;
-
     private double monthlyGrossSalary = 0.0;
-
-    private double format(double preFormat) {
-        return FormatDecimals.calculate(preFormat);
-    }
-
-    private void convertSalaryToMonthly() {
-        monthlyGrossSalary = employee.getAnnualGrossSalary() / 12.0;
-    }
 
     public SalarySlip() {
     }
@@ -29,5 +20,13 @@ public class SalarySlip implements SalarySlipInterface {
 
     public double getMonthlyGrossSalary() {
         return format(monthlyGrossSalary);
+    }
+
+    private double format(double preFormat) {
+        return FormatDecimals.calculate(preFormat);
+    }
+
+    private void convertSalaryToMonthly() {
+        monthlyGrossSalary = employee.getAnnualGrossSalary() / 12.0;
     }
 }
